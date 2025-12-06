@@ -247,7 +247,7 @@ function HeroSection() {
               >
                 <div className="relative w-full h-full">
                   <Image
-                    src="https://cdn.enhancv.com/images/1098/i/aHR0cHM6Ly9jZG4uZW5oYW5jdi5jb20vcHJlZGVmaW5lZC1leGFtcGxlcy9WS05VTmExbDZIRjhSTjdtNU1mNWFnMVpUVHNLY0FYUXo0a2dNNk1SL2ltYWdlLnBuZw~~.png"
+                 src="/images/templates/template-2.png"
                     alt="Professional resume template with clean design"
                     width={400}
                     height={533}

@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['resumegenius.com', 'cdn.enhancv.com'],
+    // No need for domains or remotePatterns when using only local images
   },
   experimental: {
     images: {
