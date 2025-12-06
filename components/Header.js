@@ -61,8 +61,17 @@ export default function Header() {
   );
 
   return (
-    <header className={`sticky top-0 z-50 bg-gradient-to-b from-slate-50/95 to-slate-50/80 backdrop-blur-sm border-b border-black/5 py-3 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-3'}`}>
-      <div className="max-w-6xl mx-auto px-4 flex items-center justify-between gap-6">
+    <header className={`sticky top-0 z-50 bg-gradient-to-br from-[#ffe6cc] to-white border-b border-orange-100 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-3'} relative`}>
+      {/* Decorative elements */}
+      <div 
+        className="absolute inset-0 opacity-30 pointer-events-none"
+        style={{
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23FF6A3D\' fill-opacity=\'0.1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")',
+          backgroundRepeat: 'repeat',
+          zIndex: 0
+        }}
+      ></div>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 flex items-center justify-between gap-6">
         <div className="flex items-center gap-3">
           <div className="w-12 h-9 rounded-md border-2 border-slate-900 flex items-center justify-center text-slate-900">
             <svg className="logo-svg" width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,8 +88,8 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <a className="rounded-full px-4 py-2 font-bold text-sm border border-black/80 hover:bg-gray-50 transition-colors" href="#">Login</a>
-          <a className="rounded-full px-4 py-2 font-bold text-sm bg-blue-600 text-white shadow-[0_4px_14px_rgba(43,111,255,0.18)] hover:bg-blue-700 transition-colors" href="#">Free Account</a>
+          <a className="rounded-full px-4 py-2 font-semibold text-sm border border-orange-200 text-orange-800 hover:bg-white/50 transition-colors" href="#">Login</a>
+          <a className="rounded-full px-4 py-2 font-semibold text-sm bg-[#FF6A3D] text-white shadow-[0_4px_14px_rgba(255,106,61,0.25)] hover:bg-[#FF5A2D] transition-colors" href="#">Free Account</a>
         </div>
 
         {/* Mobile menu button */}
@@ -111,14 +120,14 @@ export default function Header() {
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex flex-col space-y-3 px-2">
               <a 
-                className="w-full text-center rounded-full px-4 py-2 font-bold text-sm border border-black/80 hover:bg-gray-50 transition-colors" 
+                className="w-full text-center rounded-full px-4 py-2 font-semibold text-sm border border-orange-200 text-orange-800 hover:bg-white/50 transition-colors" 
                 href="#"
                 onClick={() => setIsOpen(false)}
               >
                 Login
               </a>
               <a 
-                className="w-full text-center rounded-full px-4 py-2 font-bold text-sm bg-blue-600 text-white hover:bg-blue-700 transition-colors" 
+                className="w-full text-center rounded-full px-4 py-2 font-semibold text-sm bg-[#FF6A3D] text-white hover:bg-[#FF5A2D] transition-colors shadow-md" 
                 href="#"
                 onClick={() => setIsOpen(false)}
               >
