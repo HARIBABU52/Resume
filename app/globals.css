@@ -3,6 +3,72 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --font-sans: 'Sora Variable', sans-serif;
+    --font-poppins: 'Poppins', sans-serif;
+  }
+  
+  body {
+    @apply antialiased text-gray-900 bg-white;
+    font-family: var(--font-sans);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-bold;
+  }
+  
+  .btn {
+    @apply font-poppins font-semibold;
+  }
+}
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF6A3D;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF3E00;
+}
+
+/* Custom Selection */
+::selection {
+  @apply bg-[#FF6A3D] text-white;
+}
+
+@layer base {
 	html, body {
 		@apply m-0 p-0 font-sans;
 	}
