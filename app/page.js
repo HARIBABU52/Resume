@@ -1,11 +1,15 @@
 import HeroSection from '../components/HeroSection';
-import TemplatesSection from '../components/TemplatesSection';
+import TemplatesShowcase from '../components/TemplatesShowcase';
+import HowItWorksSection from '../components/HowItWorksSection';
+import ResumeExamplesSection from '../components/ResumeExamplesSection';
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <TemplatesSection />
+      <TemplatesShowcase />
+      <HowItWorksSection />
+      <ResumeExamplesSection />
     </>
   )
 }

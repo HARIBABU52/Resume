@@ -54,7 +54,7 @@ function HeroSection() {
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="min-h-screen w-full bg-white"
+      className="screen w-full bg-white"
     >
       <div className="w-full h-full">
         <div className="flex flex-col lg:flex-row h-full">
