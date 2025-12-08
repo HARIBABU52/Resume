@@ -14,11 +14,23 @@ const CvMegaMenu = dynamic(() => import('./CvMegaMenu'), {
   loading: () => null,
 });
 
+const CoverLetterMegaMenu = dynamic(() => import('./CoverLetterMegaMenu'), {
+  ssr: false,
+  loading: () => null,
+});
+
+const BuilderMegaMenu = dynamic(() => import('./BuilderMegaMenu'), {
+  ssr: false,
+  loading: () => null,
+});
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
+  const [coverLetterOpen, setCoverLetterOpen] = useState(false);
+  const [builderOpen, setBuilderOpen] = useState(false);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -33,6 +45,8 @@ export default function Header() {
       if (!isClickInsideMenu) {
         setResumeOpen(false);
         setCvOpen(false);
+        setCoverLetterOpen(false);
+        setBuilderOpen(false);
       }
     };
 
@@ -46,6 +60,8 @@ export default function Header() {
       setIsOpen(false);
       setResumeOpen(false);
       setCvOpen(false);
+      setCoverLetterOpen(false);
+      setBuilderOpen(false);
     };
     window.addEventListener('popstate', handleRouteChange);
     return () => window.removeEventListener('popstate', handleRouteChange);
@@ -61,7 +77,23 @@ export default function Header() {
   }, []);
 
   const navItems = [
-    { name: 'Builder', hasDropdown: false },
+    { 
+      name: 'Builder', 
+      hasDropdown: true,
+      onClick: (e) => {
+        e.preventDefault();
+        setBuilderOpen(!builderOpen);
+        // Close other menus
+        setResumeOpen(false);
+        setCvOpen(false);
+        setCoverLetterOpen(false);
+        // Close mobile menu when toggling builder menu on mobile
+        if (window.innerWidth < 768) {
+          setIsOpen(false);
+        }
+      },
+      isActive: builderOpen
+    },
     { 
       name: 'Resume', 
       hasDropdown: true,
@@ -88,7 +120,20 @@ export default function Header() {
       },
       isActive: cvOpen
     },
-    { name: 'Cover Letter', hasDropdown: false },
+    { 
+      name: 'Cover Letter', 
+      hasDropdown: true,
+      onClick: (e) => {
+        e.preventDefault();
+        setCoverLetterOpen(!coverLetterOpen);
+        setResumeOpen(false);
+        setCvOpen(false);
+        if (window.innerWidth < 768) {
+          setIsOpen(false);
+        }
+      },
+      isActive: coverLetterOpen
+    },
     { name: 'Advice', hasDropdown: false },
     { name: 'Resources', hasDropdown: false },
   ];
@@ -204,7 +249,10 @@ export default function Header() {
         className="hidden md:block absolute left-0 right-0"
         onMouseLeave={() => setResumeOpen(false)}
       >
-        <ResumeMegaMenu open={resumeOpen} />
+        {resumeOpen && <ResumeMegaMenu open={resumeOpen} />}
+        {cvOpen && <CvMegaMenu open={cvOpen} />}
+        {coverLetterOpen && <CoverLetterMegaMenu open={coverLetterOpen} />}
+        {builderOpen && <BuilderMegaMenu open={builderOpen} />}
       </div>
 
       {/* Desktop CV Mega Menu */}
@@ -214,6 +262,7 @@ export default function Header() {
       >
         <CvMegaMenu open={cvOpen} />
       </div>
+
       
       {/* Mobile Resume Menu */}
       {resumeOpen && (
