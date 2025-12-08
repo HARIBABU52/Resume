@@ -130,9 +130,9 @@ export default function ResourcesMegaMenu({ open }) {
                   <div className="p-1.5 bg-white/20 rounded-md">
                     <LayoutGrid className="h-4 w-4 text-white" />
                   </div>
-                  <h2 className="text-lg font-bold text-white">Resources</h2>
+                  <h2 className="text-xl font-bold text-white tracking-tight">Resources</h2>
                 </div>
-                <div className="text-xs text-white/90">Career tools & guides</div>
+                <div className="text-sm font-medium text-white/95 tracking-wide">Career Tools & Guides</div>
               </div>
             </div>
 
@@ -149,14 +149,14 @@ export default function ResourcesMegaMenu({ open }) {
                           <div className={`p-1.5 rounded-md bg-gradient-to-br ${category.color} text-white`}>
                             <Icon className="h-4 w-4" />
                           </div>
-                          <h3 className="font-semibold text-gray-800 text-sm">{category.name}</h3>
+                          <h3 className="font-semibold text-gray-800 text-[15px] tracking-wide">{category.name}</h3>
                         </div>
                         <ul className="space-y-1.5">
                           {category.items.map((item, itemIndex) => (
                             <li key={itemIndex}>
                               <a 
                                 href={item.href}
-                                className="flex items-center text-xs text-gray-600 hover:text-orange-600 py-1 group/item transition-colors"
+                                className="flex items-center text-[13.5px] text-gray-700 hover:text-orange-600 py-1.5 group/item transition-colors font-[450]"
                               >
                                 <ChevronRight className="h-3 w-3 text-orange-400 opacity-0 group-hover/item:opacity-100 mr-1 transition-opacity flex-shrink-0" />
                                 <span className="truncate">{item.name}</span>
@@ -179,13 +179,13 @@ export default function ResourcesMegaMenu({ open }) {
                       <div className="p-1.5 rounded-md bg-amber-100 text-amber-600">
                         <DollarSign className="h-4 w-4" />
                       </div>
-                      <h3 className="font-semibold text-gray-800 text-sm">Pricing Plans</h3>
+                      <h3 className="font-bold text-lg text-gray-800 tracking-wide">Pricing Plans</h3>
                     </div>
-                    <p className="text-xs text-gray-600 mb-3">Choose the perfect plan for your needs</p>
+                    <p className="text-sm text-gray-600 mb-3 leading-relaxed">Choose the perfect plan for your needs</p>
                     <div className="space-y-3">
                       <a 
                         href="/pricing" 
-                        className="block w-full px-3 py-1.5 text-xs font-medium text-center text-white bg-gradient-to-r from-amber-500 to-orange-500 rounded-md hover:opacity-90 transition-all"
+                        className="block w-full px-3 py-1.5 text-sm font-medium text-center text-white bg-gradient-to-r from-amber-500 to-orange-500 rounded-md hover:opacity-90 transition-all"
                       >
                         View Pricing
                       </a>
@@ -212,9 +212,9 @@ export default function ResourcesMegaMenu({ open }) {
                       <div className="p-2 rounded-lg bg-blue-100 text-blue-600">
                         <Headset className="h-5 w-5" />
                       </div>
-                      <h3 className="font-semibold text-gray-800">Support Center</h3>
+                      <h3 className="font-semibold text-gray-800 text-[15px] tracking-wide">Support Center</h3>
                     </div>
-                    <p className="text-sm text-gray-600 mb-4">We're here to help you succeed</p>
+                    <p className="text-[13px] text-gray-600 mb-4 leading-relaxed">We're here to help you succeed</p>
                     <div className="grid grid-cols-2 gap-3">
                       <a 
                         href="/help" 
@@ -251,7 +251,7 @@ export default function ResourcesMegaMenu({ open }) {
 
               {/* Popular Resources */}
               <div className="mt-6 pt-4 border-t border-gray-100">
-                <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <h3 className="text-[15px] font-semibold text-gray-800 mb-3.5 flex items-center gap-2 tracking-wide">
                   <TrendingUp className="h-4 w-4 text-orange-500" />
                   Popular Resources
                 </h3>
@@ -266,7 +266,7 @@ export default function ResourcesMegaMenu({ open }) {
                         <resource.icon className="h-4 w-4" />
                       </div>
                       <div className="min-w-0">
-                        <h4 className="text-sm font-medium text-gray-800 group-hover:text-orange-600 line-clamp-2">
+                        <h4 className="text-[14px] font-medium text-gray-800 group-hover:text-orange-600 line-clamp-2 leading-snug">
                           {resource.title}
                         </h4>
                       </div>
