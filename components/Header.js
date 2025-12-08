@@ -1,10 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import ResumeMegaMenu with SSR disabled to avoid hydration issues
+const ResumeMegaMenu = dynamic(() => import('./ResumeMegaMenu'), {
+  ssr: false,
+  loading: () => null,
+});
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -20,7 +28,10 @@ export default function Header() {
 
   // Close mobile menu on route change
   useEffect(() => {
-    const handleRouteChange = () => setIsOpen(false);
+    const handleRouteChange = () => {
+      setIsOpen(false);
+      setResumeOpen(false);
+    };
     window.addEventListener('popstate', handleRouteChange);
     return () => window.removeEventListener('popstate', handleRouteChange);
   }, []);
@@ -35,25 +46,48 @@ export default function Header() {
   }, []);
 
   const navItems = [
-    { name: 'Builder', hasDropdown: true },
-    { name: 'Resume', hasDropdown: true },
-    { name: 'CV', hasDropdown: true },
-    { name: 'Cover Letter', hasDropdown: true },
-    { name: 'Advice', hasDropdown: true },
-    { name: 'Resources', hasDropdown: true },
+    { name: 'Builder', hasDropdown: false },
+    { 
+      name: 'Resume', 
+      hasDropdown: true,
+      onClick: (e) => {
+        e.preventDefault();
+        setResumeOpen(!resumeOpen);
+        // Close mobile menu when toggling resume menu on mobile
+        if (window.innerWidth < 768) {
+          setIsOpen(false);
+        }
+      },
+      isActive: resumeOpen
+    },
+    { name: 'CV', hasDropdown: false },
+    { name: 'Cover Letter', hasDropdown: false },
+    { name: 'Advice', hasDropdown: false },
+    { name: 'Resources', hasDropdown: false },
   ];
 
   const renderNavItems = (isMobile = false) => (
     <ul className={`${isMobile ? 'flex flex-col space-y-4' : 'hidden md:flex gap-6 items-center'} text-sm font-semibold text-slate-900`}>
       {navItems.map((item, index) => (
-        <li key={index} className={isMobile ? 'border-b border-gray-100 pb-2' : ''}>
+        <li key={index} className={`${isMobile ? 'border-b border-gray-100 pb-2' : ''} ${item.isActive ? 'text-orange-600' : ''}`}>
           <a 
             href="#" 
-            className="flex items-center hover:text-blue-600 transition-colors"
-            onClick={() => isMobile && setIsOpen(false)}
+            className={`flex items-center hover:text-orange-600 transition-colors ${item.isActive ? 'font-semibold' : ''}`}
+            onClick={(e) => {
+              if (item.onClick) {
+                item.onClick(e);
+              }
+              if (isMobile) {
+                setIsOpen(false);
+              }
+            }}
           >
             {item.name}
-            {item.hasDropdown && <span className="ml-1 text-xs text-slate-600">▾</span>}
+            {item.hasDropdown && (
+              <span className={`ml-1 text-xs ${item.isActive ? 'text-orange-600' : 'text-slate-600'}`}>
+                {item.isActive ? '▴' : '▾'}
+              </span>
+            )}
           </a>
         </li>
       ))}
@@ -137,6 +171,23 @@ export default function Header() {
           </div>
         </div>
       </div>
+
+      {/* Desktop Resume Mega Menu */}
+      <div 
+        className="hidden md:block absolute left-0 right-0"
+        onMouseLeave={() => setResumeOpen(false)}
+      >
+        <ResumeMegaMenu open={resumeOpen} />
+      </div>
+      
+      {/* Mobile Resume Menu */}
+      {resumeOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-4">
+            <ResumeMegaMenu open={resumeOpen} />
+          </div>
+        </div>
+      )}
     </header>
   )
 }
