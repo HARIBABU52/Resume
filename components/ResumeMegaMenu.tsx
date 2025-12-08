@@ -1,225 +1,217 @@
 "use client";
 
+import { useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, CheckCircle, FileText, FileCheck, FileSearch, Wrench, BookOpen, Zap, ChevronRight } from 'lucide-react';
+
 type ResumeMegaMenuProps = {
   open: boolean;
 };
 
+const featureCards = [
+  {
+    title: 'Resume Templates',
+    description: 'Choose from modern, ATS-friendly layouts.',
+    icon: <FileText className="w-5 h-5 text-orange-500" />,
+    color: 'bg-orange-50',
+    href: '/resume-templates',
+    cta: 'Browse templates',
+    ctaColor: 'text-orange-600'
+  },
+  {
+    title: 'Resume Builder',
+    description: 'Step-by-step editor with live resume preview.',
+    icon: <Wrench className="w-5 h-5 text-emerald-500" />,
+    color: 'bg-emerald-50',
+    href: '/builder',
+    cta: 'Start building',
+    ctaColor: 'text-emerald-600'
+  },
+  {
+    title: 'Resume Examples',
+    description: 'Real resumes for popular roles & industries.',
+    icon: <FileSearch className="w-5 h-5 text-violet-500" />,
+    color: 'bg-violet-50',
+    href: '/resume-examples',
+    cta: 'View examples',
+    ctaColor: 'text-violet-600'
+  },
+  {
+    title: 'ATS Resume Checker',
+    description: 'Scan your resume and fix issues before you apply.',
+    icon: <FileCheck className="w-5 h-5 text-sky-500" />,
+    color: 'bg-sky-50',
+    href: '/ats-checker',
+    cta: 'Check my resume',
+    ctaColor: 'text-sky-600'
+  }
+];
+
+const aiTools = [
+  { name: 'AI resume writer', href: '/ai-resume-writer' },
+  { name: 'AI summary generator', href: '/ai-summary-generator' },
+  { name: 'AI skills suggester', href: '/ai-skills-suggester' },
+  { name: 'Job description keyword matcher', href: '/keyword-matcher' }
+];
+
+const resources = [
+  { name: 'How to write a resume', href: '/how-to-write-a-resume' },
+  { name: 'Best resume formats in 2025', href: '/resume-formats' },
+  { name: 'What to put in each section', href: '/resume-sections' },
+  { name: '1-page resume checklist', href: '/resume-checklist' }
+];
+
 export default function ResumeMegaMenu({ open }: ResumeMegaMenuProps) {
-  if (!open) return null;
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        // Handle click outside if needed
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
-    <div className="absolute inset-x-0 top-full z-40 flex justify-center">
-      <div className="mt-2 w-full max-w-6xl rounded-3xl border border-orange-100 bg-gradient-to-br from-[#FFF9F4] via-[#FFF4EC] to-[#FFE5D3] px-6 py-6 shadow-[0_28px_80px_rgba(15,23,42,0.20)] backdrop-blur">
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-500">
-              Resume hub
-            </p>
-            <h3 className="mt-1 text-lg font-extrabold text-slate-900 sm:text-xl">
-              Everything you need to build a job-winning resume
-            </h3>
-            <p className="mt-1 text-xs text-slate-600 sm:text-sm">
-              Start from a template, use AI to write content, then optimize your
-              resume for ATS — all in one place.
-            </p>
-          </div>
-
-          <span className="hidden rounded-full bg-white/70 px-3 py-1 text-[11px] font-medium text-slate-500 sm:inline-flex items-center gap-2">
-            <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-[10px] font-semibold text-emerald-700">
-              AI
-            </span>
-            AI-powered resume builder
-          </span>
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-[1.5fr_1.1fr_1.2fr]">
-          {/* LEFT: Feature cards */}
-          <div className="grid gap-3 sm:grid-cols-2">
-            <a
-              href="/resume-templates"
-              className="group flex flex-col justify-between rounded-2xl bg-white/90 p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-            >
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-orange-50 text-lg">
-                  🧩
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    Resume Templates
-                  </p>
-                  <p className="text-xs text-slate-600">
-                    Choose from modern, ATS-friendly layouts.
-                  </p>
+    <AnimatePresence>
+      {open && (
+        <motion.div 
+          ref={menuRef}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-x-0 top-full z-40 flex justify-center pt-2"
+        >
+          <div className="w-full max-w-6xl rounded-2xl border border-orange-100 bg-white shadow-2xl shadow-orange-100/50 backdrop-blur-sm">
+            {/* Header */}
+            <div className="relative overflow-hidden rounded-t-2xl bg-gradient-to-r from-orange-50 to-amber-50 p-6">
+              <div className="relative z-10">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="inline-flex items-center justify-center rounded-lg bg-orange-100 p-2">
+                    <FileText className="h-5 w-5 text-orange-600" />
+                  </span>
+                  <span className="text-sm font-medium text-orange-800">Resume Hub</span>
                 </div>
+                <h3 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+                  Build a resume that gets you hired
+                </h3>
+                <p className="mt-2 max-w-2xl text-sm text-slate-600 sm:text-base">
+                  Create a professional resume in minutes with our AI-powered tools and expert-approved templates.
+                </p>
               </div>
-              <span className="mt-3 text-[11px] font-semibold text-[#FF6A3D]">
-                Browse templates →
-              </span>
-            </a>
-
-            <a
-              href="/builder"
-              className="group flex flex-col justify-between rounded-2xl bg-white/90 p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-            >
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 text-lg">
-                  ⚙️
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    Resume Builder
-                  </p>
-                  <p className="text-xs text-slate-600">
-                    Step-by-step editor with live resume preview.
-                  </p>
-                </div>
-              </div>
-              <span className="mt-3 text-[11px] font-semibold text-emerald-700">
-                Start building →
-              </span>
-            </a>
-
-            <a
-              href="/resume-examples"
-              className="group flex flex-col justify-between rounded-2xl bg-white/90 p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-            >
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-violet-50 text-lg">
-                  📚
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    Resume Examples
-                  </p>
-                  <p className="text-xs text-slate-600">
-                    Real resumes for popular roles &amp; industries.
-                  </p>
-                </div>
-              </div>
-              <span className="mt-3 text-[11px] font-semibold text-violet-700">
-                View examples →
-              </span>
-            </a>
-
-            <a
-              href="/ats-checker"
-              className="group flex flex-col justify-between rounded-2xl bg-white/90 p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-            >
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-sky-50 text-lg">
-                  ✅
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    ATS Resume Checker
-                  </p>
-                  <p className="text-xs text-slate-600">
-                    Scan your resume and fix issues before you apply.
-                  </p>
-                </div>
-              </div>
-              <span className="mt-3 text-[11px] font-semibold text-sky-700">
-                Check my resume →
-              </span>
-            </a>
-          </div>
-
-          {/* MIDDLE: Links */}
-          <div className="grid gap-5 text-sm">
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                AI &amp; tools
-              </p>
-              <ul className="space-y-1.5 text-sm">
-                <li>
-                  <a href="/ai-resume-writer" className="hover:text-[#FF6A3D]">
-                    AI resume writer
-                  </a>
-                </li>
-                <li>
-                  <a href="/ai-summary-generator" className="hover:text-[#FF6A3D]">
-                    AI summary generator
-                  </a>
-                </li>
-                <li>
-                  <a href="/ai-skills-suggester" className="hover:text-[#FF6A3D]">
-                    AI skills suggester
-                  </a>
-                </li>
-                <li>
-                  <a href="/keyword-matcher" className="hover:text-[#FF6A3D]">
-                    Job description keyword matcher
-                  </a>
-                </li>
-              </ul>
+              <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-orange-200 opacity-20"></div>
+              <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-amber-200 opacity-20"></div>
             </div>
 
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                Guides &amp; resources
-              </p>
-              <ul className="space-y-1.5 text-sm">
-                <li>
-                  <a href="/how-to-write-a-resume" className="hover:text-[#FF6A3D]">
-                    How to write a resume
-                  </a>
-                </li>
-                <li>
-                  <a href="/resume-formats" className="hover:text-[#FF6A3D]">
-                    Best resume formats in 2025
-                  </a>
-                </li>
-                <li>
-                  <a href="/resume-sections" className="hover:text-[#FF6A3D]">
-                    What to put in each section
-                  </a>
-                </li>
-                <li>
-                  <a href="/resume-checklist" className="hover:text-[#FF6A3D]">
-                    1-page resume checklist
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+            {/* Main Content */}
+            <div className="grid gap-6 p-6 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.2fr]">
+              {/* Feature Cards */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                {featureCards.map((card, index) => (
+                  <motion.a
+                    key={index}
+                    href={card.href}
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                    className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition-all hover:shadow-md"
+                  >
+                    <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full opacity-10" style={{ backgroundColor: card.ctaColor }}></div>
+                    <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg ${card.color}`}>
+                      {card.icon}
+                    </div>
+                    <h4 className="mb-1 text-sm font-semibold text-gray-900">{card.title}</h4>
+                    <p className="mb-3 text-xs text-gray-500">{card.description}</p>
+                    <div className="flex items-center">
+                      <span className={`text-xs font-medium ${card.ctaColor}`}>{card.cta}</span>
+                      <ChevronRight className={`ml-1 h-3.5 w-3.5 ${card.ctaColor} transition-transform group-hover:translate-x-1`} />
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
 
-          {/* RIGHT: preview + CTA */}
-          <div className="flex flex-col justify-between rounded-2xl bg-white/95 p-4 shadow-sm">
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <p className="text-xs font-semibold text-slate-900">
-                Save time with our builder
-              </p>
-              <span className="rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-semibold text-emerald-700">
-                5–10 min setup
-              </span>
-            </div>
+              {/* Links Section */}
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <div className="mb-3 flex items-center gap-2">
+                    <Zap className="h-4 w-4 text-orange-500" />
+                    <h4 className="text-sm font-semibold text-gray-900">AI & Tools</h4>
+                  </div>
+                  <ul className="space-y-2.5">
+                    {aiTools.map((tool, index) => (
+                      <li key={index}>
+                        <a 
+                          href={tool.href}
+                          className="group flex items-center text-sm text-gray-600 transition-colors hover:text-orange-600"
+                        >
+                          <ChevronRight className="mr-1.5 h-3.5 w-3.5 text-orange-400 opacity-0 transition-all group-hover:opacity-100" />
+                          {tool.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-            <div className="relative mb-4 h-32 rounded-2xl bg-gradient-to-br from-[#FFE0CC] via-[#FFF6EE] to-[#FDE4FF] p-3">
-              {/* tiny resume preview mock */}
-              <div className="absolute right-3 top-3 h-20 w-32 rounded-xl bg-white shadow-sm">
-                <div className="h-4 w-16 rounded-full bg-slate-200 m-2" />
-                <div className="space-y-1 px-2">
-                  <div className="h-1.5 w-full rounded-full bg-slate-100" />
-                  <div className="h-1.5 w-10/12 rounded-full bg-slate-100" />
-                  <div className="h-1.5 w-8/12 rounded-full bg-slate-100" />
+                <div>
+                  <div className="mb-3 flex items-center gap-2">
+                    <BookOpen className="h-4 w-4 text-blue-500" />
+                    <h4 className="text-sm font-semibold text-gray-900">Resources</h4>
+                  </div>
+                  <ul className="space-y-2.5">
+                    {resources.map((resource, index) => (
+                      <li key={index}>
+                        <a 
+                          href={resource.href}
+                          className="group flex items-center text-sm text-gray-600 transition-colors hover:text-blue-600"
+                        >
+                          <ChevronRight className="mr-1.5 h-3.5 w-3.5 text-blue-400 opacity-0 transition-all group-hover:opacity-100" />
+                          {resource.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-              <p className="max-w-[8rem] text-[11px] font-medium text-slate-700">
-                See your resume update live as you edit.
-              </p>
+
+              {/* CTA Section */}
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-50 to-amber-50 p-6">
+                <div className="relative z-10">
+                  <div className="mb-4 flex items-center gap-2">
+                    <div className="rounded-full bg-white/80 p-1.5 shadow-sm">
+                      <Zap className="h-4 w-4 text-orange-500" />
+                    </div>
+                    <span className="text-xs font-medium text-orange-700">AI-POWERED</span>
+                  </div>
+                  <h4 className="mb-2 text-lg font-bold text-gray-900">Create your resume in minutes</h4>
+                  <p className="mb-6 text-sm text-gray-600">Our AI helps you create a professional resume that stands out to employers.</p>
+                  
+                  <ul className="mb-6 space-y-2">
+                    {['ATS-optimized templates', 'AI content suggestions', 'Real-time preview', 'Unlimited downloads'].map((item, index) => (
+                      <li key={index} className="flex items-center text-sm text-gray-700">
+                        <CheckCircle className="mr-2 h-4 w-4 text-emerald-500" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <button className="group relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-orange-600 to-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-orange-200 transition-all hover:shadow-lg hover:shadow-orange-200">
+                    <span className="relative z-10 flex items-center justify-center">
+                      Start for free
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-400 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                  </button>
+                  
+                  <p className="mt-3 text-center text-xs text-gray-500">No credit card required</p>
+                </div>
+                <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-orange-200 opacity-20"></div>
+              </div>
             </div>
-
-            <p className="mb-3 text-xs text-slate-600">
-              Create your first resume for free, then duplicate and customize
-              versions for different jobs in seconds.
-            </p>
-
-            <button className="w-full rounded-full bg-gradient-to-r from-[#FF6A3D] to-[#FF3E00] px-5 py-2 text-sm font-semibold text-white shadow-md shadow-orange-300/50 transition hover:shadow-lg">
-              Build your resume
-            </button>
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
