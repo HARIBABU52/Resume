@@ -4,10 +4,6 @@ import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, CheckCircle, FileText, FileCheck, FileSearch, Wrench, BookOpen, Zap, ChevronRight } from 'lucide-react';
 
-type ResumeMegaMenuProps = {
-  open: boolean;
-};
-
 const featureCards = [
   {
     title: 'Resume Templates',
@@ -29,7 +25,7 @@ const featureCards = [
   },
   {
     title: 'Resume Examples',
-    description: 'Real resumes for popular roles & industries.',
+    description: 'Get inspired by professional samples.',
     icon: <FileSearch className="w-5 h-5 text-violet-500" />,
     color: 'bg-violet-50',
     href: '/resume-examples',
@@ -38,7 +34,7 @@ const featureCards = [
   },
   {
     title: 'ATS Resume Checker',
-    description: 'Scan your resume and fix issues before you apply.',
+    description: 'Check if your resume passes ATS scans.',
     icon: <FileCheck className="w-5 h-5 text-sky-500" />,
     color: 'bg-sky-50',
     href: '/ats-checker',
@@ -61,12 +57,12 @@ const resources = [
   { name: '1-page resume checklist', href: '/resume-checklist' }
 ];
 
-export default function ResumeMegaMenu({ open }: ResumeMegaMenuProps) {
-  const menuRef = useRef<HTMLDivElement>(null);
+export default function ResumeMegaMenu({ open }) {
+  const menuRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
         // Handle click outside if needed
       }
     };

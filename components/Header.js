@@ -3,8 +3,13 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
-// Dynamically import ResumeMegaMenu with SSR disabled to avoid hydration issues
-const ResumeMegaMenu = dynamic(() => import('./ResumeMegaMenu'), {
+// Dynamically import mega menus with SSR disabled to avoid hydration issues
+const ResumeMegaMenu = dynamic(() => import('./ResumeMegaMenu.js'), {
+  ssr: false,
+  loading: () => null,
+});
+
+const CvMegaMenu = dynamic(() => import('./CvMegaMenu'), {
   ssr: false,
   loading: () => null,
 });
@@ -13,12 +18,21 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
+  const [cvOpen, setCvOpen] = useState(false);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
+      const isClickInsideMenu = event.target.closest('.mega-menu-container') || 
+                              event.target.closest('.nav-item');
+      
       if (isOpen && !event.target.closest('.mobile-menu-container')) {
         setIsOpen(false);
+      }
+      
+      if (!isClickInsideMenu) {
+        setResumeOpen(false);
+        setCvOpen(false);
       }
     };
 
@@ -31,6 +45,7 @@ export default function Header() {
     const handleRouteChange = () => {
       setIsOpen(false);
       setResumeOpen(false);
+      setCvOpen(false);
     };
     window.addEventListener('popstate', handleRouteChange);
     return () => window.removeEventListener('popstate', handleRouteChange);
@@ -60,7 +75,19 @@ export default function Header() {
       },
       isActive: resumeOpen
     },
-    { name: 'CV', hasDropdown: false },
+    { 
+      name: 'CV', 
+      hasDropdown: true,
+      onClick: (e) => {
+        e.preventDefault();
+        setCvOpen(!cvOpen);
+        setResumeOpen(false);
+        if (window.innerWidth < 768) {
+          setIsOpen(false);
+        }
+      },
+      isActive: cvOpen
+    },
     { name: 'Cover Letter', hasDropdown: false },
     { name: 'Advice', hasDropdown: false },
     { name: 'Resources', hasDropdown: false },
@@ -69,7 +96,7 @@ export default function Header() {
   const renderNavItems = (isMobile = false) => (
     <ul className={`${isMobile ? 'flex flex-col space-y-4' : 'hidden md:flex gap-6 items-center'} text-sm font-semibold text-slate-900`}>
       {navItems.map((item, index) => (
-        <li key={index} className={`${isMobile ? 'border-b border-gray-100 pb-2' : ''} ${item.isActive ? 'text-orange-600' : ''}`}>
+        <li key={index} className={`nav-item ${isMobile ? 'border-b border-gray-100 pb-2' : ''} ${item.isActive ? 'text-orange-600' : ''}`}>
           <a 
             href="#" 
             className={`flex items-center hover:text-orange-600 transition-colors ${item.isActive ? 'font-semibold' : ''}`}
@@ -178,6 +205,14 @@ export default function Header() {
         onMouseLeave={() => setResumeOpen(false)}
       >
         <ResumeMegaMenu open={resumeOpen} />
+      </div>
+
+      {/* Desktop CV Mega Menu */}
+      <div 
+        className="hidden md:block absolute left-0 right-0"
+        onMouseLeave={() => setCvOpen(false)}
+      >
+        <CvMegaMenu open={cvOpen} />
       </div>
       
       {/* Mobile Resume Menu */}
