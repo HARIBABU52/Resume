@@ -24,6 +24,11 @@ const BuilderMegaMenu = dynamic(() => import('./BuilderMegaMenu'), {
   loading: () => null,
 });
 
+const ResourcesMegaMenu = dynamic(() => import('./ResourcesMegaMenu'), {
+  ssr: false,
+  loading: () => null,
+});
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,6 +36,7 @@ export default function Header() {
   const [cvOpen, setCvOpen] = useState(false);
   const [coverLetterOpen, setCoverLetterOpen] = useState(false);
   const [builderOpen, setBuilderOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -47,6 +53,7 @@ export default function Header() {
         setCvOpen(false);
         setCoverLetterOpen(false);
         setBuilderOpen(false);
+        setResourcesOpen(false);
       }
     };
 
@@ -62,6 +69,7 @@ export default function Header() {
       setCvOpen(false);
       setCoverLetterOpen(false);
       setBuilderOpen(false);
+      setResourcesOpen(false);
     };
     window.addEventListener('popstate', handleRouteChange);
     return () => window.removeEventListener('popstate', handleRouteChange);
@@ -82,11 +90,15 @@ export default function Header() {
       hasDropdown: true,
       onClick: (e) => {
         e.preventDefault();
-        setBuilderOpen(!builderOpen);
-        // Close other menus
-        setResumeOpen(false);
-        setCvOpen(false);
-        setCoverLetterOpen(false);
+        // Toggle builder menu and close all other menus
+        const newBuilderState = !builderOpen;
+        setBuilderOpen(newBuilderState);
+        if (newBuilderState) {
+          setResumeOpen(false);
+          setCvOpen(false);
+          setCoverLetterOpen(false);
+          setResourcesOpen(false);
+        }
         // Close mobile menu when toggling builder menu on mobile
         if (window.innerWidth < 768) {
           setIsOpen(false);
@@ -99,7 +111,15 @@ export default function Header() {
       hasDropdown: true,
       onClick: (e) => {
         e.preventDefault();
-        setResumeOpen(!resumeOpen);
+        // Toggle resume menu and close all other menus
+        const newResumeState = !resumeOpen;
+        setResumeOpen(newResumeState);
+        if (newResumeState) {
+          setBuilderOpen(false);
+          setCvOpen(false);
+          setCoverLetterOpen(false);
+          setResourcesOpen(false);
+        }
         // Close mobile menu when toggling resume menu on mobile
         if (window.innerWidth < 768) {
           setIsOpen(false);
@@ -112,8 +132,15 @@ export default function Header() {
       hasDropdown: true,
       onClick: (e) => {
         e.preventDefault();
-        setCvOpen(!cvOpen);
-        setResumeOpen(false);
+        // Toggle CV menu and close all other menus
+        const newCvState = !cvOpen;
+        setCvOpen(newCvState);
+        if (newCvState) {
+          setBuilderOpen(false);
+          setResumeOpen(false);
+          setCoverLetterOpen(false);
+          setResourcesOpen(false);
+        }
         if (window.innerWidth < 768) {
           setIsOpen(false);
         }
@@ -125,17 +152,40 @@ export default function Header() {
       hasDropdown: true,
       onClick: (e) => {
         e.preventDefault();
-        setCoverLetterOpen(!coverLetterOpen);
-        setResumeOpen(false);
-        setCvOpen(false);
+        // Toggle cover letter menu and close all other menus
+        const newCoverLetterState = !coverLetterOpen;
+        setCoverLetterOpen(newCoverLetterState);
+        if (newCoverLetterState) {
+          setBuilderOpen(false);
+          setResumeOpen(false);
+          setCvOpen(false);
+          setResourcesOpen(false);
+        }
         if (window.innerWidth < 768) {
           setIsOpen(false);
         }
       },
       isActive: coverLetterOpen
     },
-    { name: 'Advice', hasDropdown: false },
-    { name: 'Resources', hasDropdown: false },
+    // { name: 'Advice', hasDropdown: false },
+    { 
+      name: 'Resources', 
+      hasDropdown: true,
+      onClick: (e) => {
+        e.preventDefault();
+        setResourcesOpen(!resourcesOpen);
+        // Close other menus
+        setResumeOpen(false);
+        setCvOpen(false);
+        setCoverLetterOpen(false);
+        setBuilderOpen(false);
+        // Close mobile menu when toggling resources menu on mobile
+        if (window.innerWidth < 768) {
+          setIsOpen(false);
+        }
+      },
+      isActive: resourcesOpen
+    },
   ];
 
   const renderNavItems = (isMobile = false) => (
@@ -253,6 +303,7 @@ export default function Header() {
         {cvOpen && <CvMegaMenu open={cvOpen} />}
         {coverLetterOpen && <CoverLetterMegaMenu open={coverLetterOpen} />}
         {builderOpen && <BuilderMegaMenu open={builderOpen} />}
+        {resourcesOpen && <ResourcesMegaMenu open={resourcesOpen} />}
       </div>
 
       {/* Desktop CV Mega Menu */}
