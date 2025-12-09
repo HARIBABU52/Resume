@@ -2,6 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-full;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* Scrollable containers */
+.scrollable-y {
+  @apply overflow-y-auto;
+  scrollbar-width: thin;
+  scrollbar-color: #9CA3AF #F3F4F6;
+}
+
+.scrollable-x {
+  @apply overflow-x-auto;
+  scrollbar-width: thin;
+  scrollbar-color: #9CA3AF #F3F4F6;
+}
+
+/* Editor panel scroll */
+.editor-panel {
+  @apply h-[calc(100vh-2rem)] overflow-y-auto pr-2;
+}
+
+/* Resume preview scroll */
+.resume-preview {
+  @apply h-[calc(100vh-2rem)] overflow-y-auto pr-2;
+}
+
 @layer base {
   body {
     @apply antialiased text-gray-900 bg-gray-100 p-10 font-sans;
