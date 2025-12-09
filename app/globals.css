@@ -3,18 +3,12 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --font-sans: 'Sora Variable', sans-serif;
-    --font-poppins: 'Poppins', sans-serif;
-  }
-  
   body {
-    @apply antialiased text-gray-900 bg-white;
-    font-family: var(--font-sans);
+    @apply antialiased text-gray-900 bg-gray-100 p-10 font-sans;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-bold;
+    @apply font-poppins font-bold;
   }
   
   .btn {

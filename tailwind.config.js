@@ -9,7 +9,8 @@ module.exports = {
     extend: {
       colors: {},
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Sora', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
     },
   },
