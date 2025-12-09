@@ -630,7 +630,7 @@ export default function Page() {
       <div className="flex min-h-screen">
         {/* Editor Panel */}
         {isEditing && (
-          <div className="w-96 p-4 bg-gray-50 border-r editor-panel scrollable-y">
+          <div className="w-96 p-4 bg-gray-50 border-r editor-panel scrollable-y bg-gradient-to-br from-[#FFD6C2] via-[#FF9F70] to-[#FF6F3C">
             <h2 className="text-xl font-bold mb-6 text-gray-800">Edit Resume</h2>
             
             <div className="space-y-6">
@@ -1151,7 +1151,11 @@ export default function Page() {
         )}
 
         {/* Resume Preview */}
-        <div className="flex-1 p-4 bg-gray-100">
+<div className="flex-1 p-4 bg-gradient-to-br from-[#FFF3EA] via-[#FFE0D0] to-[#FFC2A6]">
+
+
+
+
           <div className="max-w-[210mm] mx-auto resume-preview">
             <div ref={containerRef}>
               {pages.map((pg, i) => (
