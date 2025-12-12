@@ -19,6 +19,10 @@
     "jsx": "preserve",
     "incremental": true,
     "jsxImportSource": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "plugins": [
       {
         "name": "next"
